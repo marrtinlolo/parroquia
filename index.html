@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>título</title>
+  <style>
+    :root {
+      --verde-palido: #e8f5e9;
+      --verde-suave: #c8e6c9;
+      --verde-medio: #81c784;
+      --verde-oscuro: #2e7d32;
+      --verde-texto: #1b5e20;
+      --blanco: #ffffff;
+      --gris-texto: #333333;
+      --sombra: 0 4px 12px rgba(46, 125, 50, 0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      background-color: var(--verde-palido);
+      color: var(--gris-texto);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 20px 16px 40px;
+    }
+
+    .contenedor {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+      padding: 28px 20px 20px;
+      background: linear-gradient(135deg, var(--verde-suave), #dcedc8);
+      border-radius: 16px;
+      box-shadow: var(--sombra);
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.4rem);
+      color: var(--verde-texto);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .subtitulo {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      color: var(--verde-oscuro);
+      opacity: 0.9;
+    }
+
+    .ultima-actualizacion {
+      background: var(--blanco);
+      border: 2px solid var(--verde-medio);
+      border-radius: 12px;
+      padding: 14px 20px;
+      margin-bottom: 28px;
+      text-align: center;
+      box-shadow: var(--sombra);
+      font-size: 0.95rem;
+    }
+
+    .ultima-actualizacion strong {
+      color: var(--verde-texto);
+      display: block;
+      margin-bottom: 4px;
+      font-size: 1rem;
+    }
+
+    .fecha {
+      color: var(--verde-oscuro);
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .seccion {
+      background: var(--blanco);
+      border-radius: 14px;
+      margin-bottom: 22px;
+      box-shadow: var(--sombra);
+      overflow: hidden;
+      border: 1px solid var(--verde-suave);
+    }
+
+    .seccion-titulo {
+      background: linear-gradient(90deg, var(--verde-medio), var(--verde-suave));
+      color: var(--verde-texto);
+      padding: 12px 18px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--verde-suave);
+    }
+
+    .texto-scrollable {
+      max-height: 280px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 18px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 1rem;
+      line-height: 1.65;
+      color: #2c3e50;
+      background: #fafdfb;
+    }
+
+    .texto-scrollable::-webkit-scrollbar {
+      width: 8px;
+    }
+    .texto-scrollable::-webkit-scrollbar-track {
+      background: #e8f5e9;
+      border-radius: 4px;
+    }
+    .texto-scrollable::-webkit-scrollbar-thumb {
+      background: var(--verde-medio);
+      border-radius: 4px;
+    }
+    .texto-scrollable::-webkit-scrollbar-thumb:hover {
+      background: var(--verde-oscuro);
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px 10px 30px;
+      }
+
+      header {
+        padding: 22px 16px 16px;
+      }
+
+      .texto-scrollable {
+        max-height: 240px;
+        padding: 14px;
+        font-size: 0.95rem;
+      }
+
+      .seccion-titulo {
+        font-size: 1rem;
+        padding: 10px 14px;
+      }
+
+      .ultima-actualizacion {
+        padding: 12px 14px;
+        font-size: 0.9rem;
+      }
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.85rem;
+      color: var(--verde-oscuro);
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor">
+    <header>
+      <h1>título</h1>
+      <p class="subtitulo">subtítulo</p>
+    </header>
+
+    <div class="ultima-actualizacion">
+      <strong>🕒 Última actualización</strong>
+      <span class="fecha" id="fecha-actualizacion">Cargando...</span>
+    </div>
+
+    <!-- TEXTO UNO -->
+    <div class="seccion">
+      <div class="seccion-titulo">texto uno</div>
+      <div class="texto-scrollable" id="texto1">Cargando texto uno...</div>
+    </div>
+
+    <!-- TEXTO DOS -->
+    <div class="seccion">
+      <div class="seccion-titulo">texto dos</div>
+      <div class="texto-scrollable" id="texto2">Cargando texto dos...</div>
+    </div>
+
+    <!-- TEXTO TRES -->
+    <div class="seccion">
+      <div class="seccion-titulo">texto tres</div>
+      <div class="texto-scrollable" id="texto3">Cargando texto tres...</div>
+    </div>
+
+    <!-- TEXTO CUATRO -->
+    <div class="seccion">
+      <div class="seccion-titulo">texto cuatro</div>
+      <div class="texto-scrollable" id="texto4">Cargando texto cuatro...</div>
+    </div>
+
+    <!-- TEXTO CINCO -->
+    <div class="seccion">
+      <div class="seccion-titulo">texto cinco</div>
+      <div class="texto-scrollable" id="texto5">Cargando texto cinco...</div>
+    </div>
+
+    <footer>
+      Página creada para uso personal · Diseño responsive
+    </footer>
+  </div>
+
+  <script>
+    // Cargar los 5 archivos de texto
+    async function cargarTexto(id, archivo) {
+      try {
+        const respuesta = await fetch(archivo);
+        if (!respuesta.ok) throw new Error('No se pudo cargar');
+        const texto = await respuesta.text();
+        document.getElementById(id).textContent = texto;
+      } catch (error) {
+        document.getElementById(id).textContent = 'Error al cargar el texto. Asegúrate de haber subido el archivo ' + archivo;
+      }
+    }
+
+    // Cargar todos los textos
+    cargarTexto('texto1', 'texto1.txt');
+    cargarTexto('texto2', 'texto2.txt');
+    cargarTexto('texto3', 'texto3.txt');
+    cargarTexto('texto4', 'texto4.txt');
+    cargarTexto('texto5', 'texto5.txt');
+
+    // Fecha de última modificación del archivo principal
+    (function() {
+      const fechaElemento = document.getElementById('fecha-actualizacion');
+      const ultimaModificacion = new Date(document.lastModified);
+      const opciones = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      };
+      fechaElemento.textContent = ultimaModificacion.toLocaleDateString('es-ES', opciones);
+    })();
+  </script>
+</body>
+</html>
