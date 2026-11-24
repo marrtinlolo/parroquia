@@ -212,16 +212,77 @@
 
   <script>
     // Cargar los 5 archivos de texto
-    async function cargarTexto(id, archivo) {
-      try {
-        const respuesta = await fetch(archivo);
-        if (!respuesta.ok) throw new Error('No se pudo cargar');
-        const texto = await respuesta.text();
-        document.getElementById(id).textContent = texto;
-      } catch (error) {
-        document.getElementById(id).textContent = 'Error al cargar el texto. Asegúrate de haber subido el archivo ' + archivo;
-      }
+
+function escaparHTML(texto) {
+  return texto.replace(/[&<>"']/g, c => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[c]);
+}
+
+function darFormatoLiturgico(texto) {
+  const lineas = texto.split(/\r?\n/);
+  let despuesDeEncabezado = false;
+  let referenciaVista = false;
+
+  return lineas.map(linea => {
+    const t = linea.trim();
+
+    if (!t) return '<div style="height:0.6em"></div>';
+
+    const seguro = escaparHTML(t);
+
+    if (/^(Primera lectura|Segunda lectura|Salmo responsorial|Aleluya|Evangelio)$/i.test(t)) {
+      despuesDeEncabezado = true;
+      referenciaVista = false;
+      return `<h3 style="color:#2e7d32;font-size:1.1rem;margin:12px 0 5px;font-weight:700">${seguro}</h3>`;
     }
+
+    if (despuesDeEncabezado && !referenciaVista &&
+        /^[\wÁÉÍÓÚáéíóúñÑ0-9.,;() -]{3,45}$/.test(t) &&
+        /\d/.test(t)) {
+      referenciaVista = true;
+      return `<p style="color:#558b55;font-size:0.95rem;margin:2px 0 6px">${seguro}</p>`;
+    }
+
+    if (despuesDeEncabezado && referenciaVista) {
+      despuesDeEncabezado = false;
+      referenciaVista = false;
+      return `<p style="font-weight:600;margin:4px 0 10px">${seguro}</p>`;
+    }
+
+    if (/^Palabra de (Dios|el Señor)\.?$/i.test(t)) {
+      return `<p style="color:#2e7d32;font-weight:700;margin-top:10px">${seguro}</p>`;
+    }
+
+    if (/^(R\.|V\.)/.test(t)) {
+      const esRespuesta = t.startsWith('R.');
+      return `<p style="margin:5px 0;${esRespuesta ? 'color:#2e7d32;font-weight:600;' : ''}">${seguro}</p>`;
+    }
+
+    if (/^(Lectura del |\\+\\s*Lectura del )/i.test(t)) {
+      return `<p style="font-style:italic;color:#555;margin:5px 0 10px">${seguro}</p>`;
+    }
+
+    return `<p style="margin:4px 0">${seguro}</p>`;
+  }).join('');
+}
+
+async function cargarTexto(id, archivo) {
+  try {
+    const respuesta = await fetch(archivo);
+    if (!respuesta.ok) throw new Error('No se pudo cargar');
+    const texto = await respuesta.text();
+    document.getElementById(id).innerHTML = darFormatoLiturgico(texto);
+  } catch (error) {
+    document.getElementById(id).textContent =
+      'Error al cargar el texto. Asegúrate de haber subido el archivo ' + archivo;
+  }
+}
+
 
     // Cargar todos los textos
     cargarTexto('texto1', 'texto1.txt');
